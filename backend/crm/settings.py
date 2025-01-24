@@ -31,15 +31,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crm_app',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,6 +70,17 @@ TEMPLATES = [
         },
     },
 ]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React development server
+]
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
+CSRF_COOKIE_NAME = "csrftoken"
+CSRF_COOKIE_HTTPONLY = False
 
 WSGI_APPLICATION = 'crm.wsgi.application'
 
@@ -115,9 +130,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+import os
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
+
+# Include the frontend static files directory if it exists
+frontend_static_path = BASE_DIR.parent / "frontend" / "build" / "static"
+if frontend_static_path.exists():
+    STATICFILES_DIRS = [frontend_static_path]
+else:
+    STATICFILES_DIRS = []
+
+# Directory where collectstatic will place all static files
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Optional: Log a warning if the frontend build static directory is missing
+if not frontend_static_path.exists():
+    print(f"Warning: {frontend_static_path} does not exist. Run 'npm run build' in the frontend directory.")
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'crm_app.CustomUser'
