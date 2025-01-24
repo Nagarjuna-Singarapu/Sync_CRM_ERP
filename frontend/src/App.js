@@ -10,9 +10,9 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                
+                <Route path="/" element={<h2>Welcome..!<a href="/login">Click here to login</a></h2>} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/" element={<Login />} />
+                <Route path="/login" element={<Login />} />
                 {/* Private Routes */}
                 <Route element={<BaseLayout />}>
                     <Route path="/leads" element={<LeadList />} />

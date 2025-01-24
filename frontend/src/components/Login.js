@@ -95,6 +95,7 @@ const Login = () => {
                 {message && <p style={{ color: "green" }}>{message}</p>}
                 <button type="submit">Login</button>
             </form>
+            <p>Don't have an account? <a href="/signup">Click here to signup</a></p>
         </div>
     );
 };

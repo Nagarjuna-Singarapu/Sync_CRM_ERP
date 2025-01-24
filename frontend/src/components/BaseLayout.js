@@ -11,7 +11,7 @@ const BaseLayout = () => {
     const handleLogout = () => {
         // Perform logout logic, such as clearing tokens
         console.log("Logging out...");
-        navigate("/");
+        navigate("/login");
     };
 
     return (
